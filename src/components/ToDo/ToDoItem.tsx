@@ -15,8 +15,9 @@ type ToDoItemProps = {
 const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
   const {refreshData} = useData();
   const { openModal } = useModal();
-  
+
   const data = useRecoilValue(dataState);
+  const board = data?.board.find((board) => board.id === todo.boardId);
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -63,11 +64,15 @@ const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
           {todo.title}
         </h1>
         <p className="text-xs text-neutral-500 ellipsis">
-          {data?.board.find((board) => board.id === todo.boardId)?.title} | {todo.description}
+          {board?.title} | {todo.description}
         </p>
       </div>
     </div>
-    {!isDragging && (
+    {isDragging ? (
+      <div className="w-2.5 h-2.5 rounded-full" style={{
+        backgroundColor: board?.color || "#FFFFFF",
+      }}></div>
+    ) : (
       <button 
         className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
         style={{

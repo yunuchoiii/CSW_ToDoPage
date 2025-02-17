@@ -95,7 +95,7 @@ const BoardForm = ({ formData }: BoardFormProps) => {
           type="submit" 
           className="w-full p-2 rounded-lg bg-[#d3eef4] text-cyan-700 hover:brightness-95 mt-5 font-bold"
         >
-          {formData ? "수정" : "추가"}
+          저장
         </button>
         {formData && 
           <button 
