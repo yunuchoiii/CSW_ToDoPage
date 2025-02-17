@@ -34,7 +34,10 @@ export default function Home() {
         <BoardList boards={data?.board || []} />
       </Section>
       <Section title="ToDo" type="todo">
-        <ToDoList todos={activeBoardId === 0 ? data?.todo || [] : data?.todo.filter((todo) => todo.boardId === activeBoardId) || []} />
+        <ToDoList 
+          todos={activeBoardId === 0 ? data?.todo || [] : data?.todo.filter((todo) => todo.boardId === activeBoardId) || []} 
+          boards={data?.board || []} 
+        />
       </Section>
       <Modal
         isOpen={isModalOpen}

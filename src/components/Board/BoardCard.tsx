@@ -1,11 +1,11 @@
 'use client';
 
+import { useModal } from "@/hooks/useModal";
 import { activeBoardIdState, dataState } from "@/store/data";
-import { modalChildrenState, modalOpenState } from "@/store/modal";
 import { Board, Todo } from "@/types/data";
 import { changeBackgroundColor, getRGBAFromHex } from "@/util";
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import BoardForm from "./BoardForm";
 
 type BoardCardProps = {
@@ -13,13 +13,12 @@ type BoardCardProps = {
 }
 
 const BoardCard = ({ board }: BoardCardProps) => {
+  const { openModal } = useModal();
+
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const data = useRecoilValue(dataState);
   const [activeBoardId, setActiveBoardId] = useRecoilState(activeBoardIdState);
-
-  const setOpenModal = useSetRecoilState(modalOpenState);
-  const setModalChildren = useSetRecoilState(modalChildrenState);
 
   useEffect(() => {
     setTodos(data!.todo.filter((todo) => todo.boardId === board.id));
@@ -27,8 +26,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setOpenModal(true);
-    setModalChildren(<BoardForm formData={board} />);
+    openModal(<BoardForm formData={board} />);
   };
 
   const handleClickBoard = () => {
@@ -49,7 +47,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
     onClick={handleClickBoard}
   >
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         <h1 
           className="text-2xl font-bold tracking-tight text-neutral-700"
         >

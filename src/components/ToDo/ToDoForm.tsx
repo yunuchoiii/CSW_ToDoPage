@@ -1,27 +1,28 @@
 import { useData } from "@/hooks/useData";
+import { useModal } from "@/hooks/useModal";
 import { dataService } from "@/service";
 import { activeBoardIdState, dataState } from "@/store/data";
-import { modalOpenState } from "@/store/modal";
 import { Todo } from "@/types/data";
 import { useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import Input from "../Input/Input";
 import Select from "../Input/Select";
 
 type ToDoFormProps = {
   formData?: Todo;
+  defaultBoardId?: number;
 }
 
-const ToDoForm = ({ formData }: ToDoFormProps) => {
+const ToDoForm = ({ formData, defaultBoardId }: ToDoFormProps) => {
   const {refreshData} = useData();
+  const { closeModal } = useModal();
+
   const activeBoardId = useRecoilValue(activeBoardIdState);
   const initData = useRecoilValue(dataState);
 
   const [title, setTitle] = useState(formData?.title || "");
   const [description, setDescription] = useState(formData?.description || "");
-  const [boardId, setBoardId] = useState(formData?.boardId || activeBoardId || initData!.board[0].id);
-
-  const setOpenModal = useSetRecoilState(modalOpenState);
+  const [boardId, setBoardId] = useState(defaultBoardId || formData?.boardId || activeBoardId || initData!.board[0].id);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ const ToDoForm = ({ formData }: ToDoFormProps) => {
         });
       }
       refreshData();
-      setOpenModal(false);
+      closeModal();
     } catch (error) {
       console.error("데이터 추가 실패", error);
     }
@@ -61,7 +62,7 @@ const ToDoForm = ({ formData }: ToDoFormProps) => {
         id: formData!.id,
       });
       refreshData();
-      setOpenModal(false);
+      closeModal();
     }
   };
 
@@ -97,14 +98,14 @@ const ToDoForm = ({ formData }: ToDoFormProps) => {
       <div className="flex items-center justify-between gap-2.5">
         <button 
           type="submit" 
-          className="w-full p-2 rounded-lg bg-cyan-800 text-white mt-5 font-bold"
+          className="w-full p-2 rounded-lg bg-[#d3eef4] text-cyan-700 hover:brightness-95 mt-5 font-bold"
         >
           {formData ? "수정" : "추가"}
         </button>
         {formData && 
           <button 
             type="button" 
-            className="w-full p-2 rounded-lg bg-rose-500 text-white mt-5 font-bold"
+            className="w-full p-2 rounded-lg bg-[#fee3e3] text-red-600 hover:brightness-95 mt-5 font-bold"
             onClick={handleDelete}
           >
             삭제

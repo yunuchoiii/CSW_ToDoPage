@@ -1,10 +1,10 @@
 import { useData } from "@/hooks/useData";
+import { useModal } from "@/hooks/useModal";
 import { dataService } from "@/service";
 import { dataState } from "@/store/data";
-import { modalChildrenState, modalOpenState } from "@/store/modal";
 import { Todo } from "@/types/data";
 import { getRGBAFromHex } from "@/util";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import ToDoForm from "./ToDoForm";
 
 type ToDoItemProps = {
@@ -14,14 +14,13 @@ type ToDoItemProps = {
 
 const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
   const {refreshData} = useData();
+  const { openModal } = useModal();
+  
   const data = useRecoilValue(dataState);
-  const setOpenModal = useSetRecoilState(modalOpenState);
-  const setModalChildren = useSetRecoilState(modalChildrenState);
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setOpenModal(true);
-    setModalChildren(<ToDoForm formData={todo} />);
+    openModal(<ToDoForm formData={todo} />);
   }
 
   const handleToggleDone = () => {
