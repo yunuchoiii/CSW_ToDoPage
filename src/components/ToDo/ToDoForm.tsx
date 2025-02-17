@@ -5,6 +5,7 @@ import { activeBoardIdState, dataState } from "@/store/data";
 import { Todo } from "@/types/data";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
+import FormButton from "../Button/FormButton";
 import Input from "../Input/Input";
 import Select from "../Input/Select";
 
@@ -96,21 +97,8 @@ const ToDoForm = ({ formData, defaultBoardId }: ToDoFormProps) => {
         onChange={(e) => setDescription(e.target.value)}
       />
       <div className="flex items-center justify-between gap-2.5">
-        <button 
-          type="submit" 
-          className="w-full p-2 rounded-lg bg-[#d3eef4] text-cyan-700 hover:brightness-95 mt-5 font-bold"
-        >
-          저장
-        </button>
-        {formData && 
-          <button 
-            type="button" 
-            className="w-full p-2 rounded-lg bg-[#fee3e3] text-red-600 hover:brightness-95 mt-5 font-bold"
-            onClick={handleDelete}
-          >
-            삭제
-          </button>
-        }
+        <FormButton type="save" />
+        {formData && <FormButton type="delete" onClick={handleDelete} />}
       </div>
     </form>
   );

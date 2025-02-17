@@ -5,7 +5,10 @@ export const getRGBAFromHex = (color: string) => {
 export const changeBackgroundColor = (color?: string) => {
   const root = document.documentElement;
   if (color) {
-    root.style.setProperty('--background', `${color}`);
+    const rgbaColor = getRGBAFromHex(color);
+    const startColor = rgbaColor.replace(", 1)", ", 0.1)");
+    const endColor = rgbaColor.replace(", 1)", ", 0.5)");
+    root.style.setProperty('--background', `linear-gradient(150deg, ${startColor} 0%, ${endColor} 100%)`);
   } else {
     root.style.removeProperty('--background');
   }

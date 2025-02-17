@@ -2,10 +2,12 @@ import colors from "@/constants/color";
 import { useData } from "@/hooks/useData";
 import { useModal } from "@/hooks/useModal";
 import { dataService } from "@/service";
-import { dataState } from "@/store/data";
+import { activeBoardIdState, dataState } from "@/store/data";
 import { Board } from "@/types/data";
+import { changeBackgroundColor } from "@/util";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
+import FormButton from "../Button/FormButton";
 import ColorPicker from "../Input/ColorPicker";
 import Input from "../Input/Input";
 
@@ -15,9 +17,10 @@ type BoardFormProps = {
 
 const BoardForm = ({ formData }: BoardFormProps) => {
   const {refreshData} = useData();
-  const { closeModal } = useModal();
+  const {closeModal} = useModal();
 
   const initData = useRecoilValue(dataState);
+  const activeBoardId = useRecoilValue(activeBoardIdState);
 
   const [title, setTitle] = useState(formData?.title || "");
   const [description, setDescription] = useState(formData?.description || "");
@@ -44,6 +47,9 @@ const BoardForm = ({ formData }: BoardFormProps) => {
           type: "board",
           formData: data,
         });
+      }
+      if (activeBoardId === formData?.id) {
+        changeBackgroundColor(color);
       }
       refreshData();
       closeModal();
@@ -91,21 +97,8 @@ const BoardForm = ({ formData }: BoardFormProps) => {
         onChange={(color) => setColor(color)}
       />
       <div className="flex items-center justify-between gap-2.5">
-        <button 
-          type="submit" 
-          className="w-full p-2 rounded-lg bg-[#d3eef4] text-cyan-700 hover:brightness-95 mt-5 font-bold"
-        >
-          저장
-        </button>
-        {formData && 
-          <button 
-            type="button" 
-            className="w-full p-2 rounded-lg bg-[#fee3e3] text-red-600 hover:brightness-95 mt-5 font-bold"
-            onClick={handleDelete}
-          >
-            삭제
-          </button>
-        }
+        <FormButton type="save" />
+        {formData && <FormButton type="delete" onClick={handleDelete} />}
       </div>
     </form>
   );

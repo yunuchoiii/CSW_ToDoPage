@@ -1,11 +1,14 @@
+import { modalChildrenState, modalOpenState } from "@/store/modal";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-};
+const Modal = () => {
+  const [isOpen, setIsOpen] = useRecoilState(modalOpenState);
+  const modalChildren = useRecoilValue(modalChildrenState);
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+  const onClose = () => {
+    setIsOpen(false);
+  }
+
   if (!isOpen) return null;
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-20 flex items-center justify-center z-50" onClick={onClose}>
@@ -21,7 +24,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         >
           <img src="https://www.svgrepo.com/show/510921/close-lg.svg" alt="close" className="w-4 h-4" />
         </button>
-        {children}
+        {modalChildren}
       </div>
     </div>
   );

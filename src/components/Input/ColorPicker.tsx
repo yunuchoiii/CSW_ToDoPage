@@ -13,6 +13,11 @@ type ColorPickerProps = {
 const ColorPicker = ({ label, id, value, onChange }: ColorPickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const onClickPicker = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  }
+
   const onClickColor = (color: string) => {
     onChange(color);
     setIsOpen(false);
@@ -24,13 +29,10 @@ const ColorPicker = ({ label, id, value, onChange }: ColorPickerProps) => {
       <button 
         className="rounded-full h-5 w-5" 
         style={{ backgroundColor: value }} 
-        onClick={(e) => {
-          e.preventDefault();
-          setIsOpen(!isOpen)
-        }}
+        onClick={onClickPicker}
       />
       {isOpen && (
-        <div className="absolute top-full mt-2.5 left-0 p-5 bg-white rounded-md shadow-[0_0_10px_0_rgba(0,0,0,0.1)] flex flex-col gap-2.5">
+        <div className="absolute top-full mt-2.5 left-0 p-5 bg-white rounded-xl shadow-[0_0_10px_0_rgba(0,0,0,0.1)] flex flex-col gap-2.5 z-10">
           {[colors.slice(0, colors.length / 2), colors.slice(colors.length / 2)].map((colorGroup) => (
             <div key={colorGroup[0].value} className="flex flex-row gap-2.5">
               {colorGroup.map((color) => (

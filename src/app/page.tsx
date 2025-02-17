@@ -7,15 +7,12 @@ import Section from "@/components/Section/Section";
 import ToDoList from "@/components/ToDo/ToDoList";
 import { useData } from "@/hooks/useData";
 import { activeBoardIdState } from "@/store/data";
-import { modalChildrenState, modalOpenState } from "@/store/modal";
 import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 
 export default function Home() {
   const {data, refreshData} = useData();
 
-  const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpenState);
-  const modalChildren = useRecoilValue(modalChildrenState);
   const activeBoardId = useRecoilValue(activeBoardIdState);
 
   useEffect(() => {
@@ -30,20 +27,13 @@ export default function Home() {
 
   return (
     <div>
-      <Section title="Board" type="board">
-        <BoardList boards={data?.board || []} />
+      <Section type="board">
+        <BoardList boards={data?.board} />
       </Section>
-      <Section title="ToDo" type="todo">
-        <ToDoList 
-          todos={activeBoardId === 0 ? data?.todo : data?.todo.filter((todo) => todo.boardId === activeBoardId)} 
-        />
+      <Section type="todo">
+        <ToDoList todos={data?.todo}  />
       </Section>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      >
-        <>{modalChildren}</>
-      </Modal>
+      <Modal/>
     </div>
   );
 

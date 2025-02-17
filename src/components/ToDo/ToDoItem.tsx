@@ -14,7 +14,7 @@ type ToDoItemProps = {
 
 const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
   const {refreshData} = useData();
-  const { openModal } = useModal();
+  const {openModal} = useModal();
 
   const data = useRecoilValue(dataState);
   const board = data?.board.find((board) => board.id === todo.boardId);
@@ -37,12 +37,12 @@ const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
   }
 
   return <div 
-    className={`h-[75px] flex items-center justify-between pl-1.5 pr-5 rounded-[15px] bg-white bg-opacity-85 hover:bg-opacity-90 shadow-lg backdrop-blur-sm cursor-pointer transition-all duration-150 ${todo.isDone ? " text-neutral-500" : "text-neutral-700"}`}
+    className={`h-[75px] flex items-center justify-between pl-2.5 pr-5 rounded-[15px] bg-white bg-opacity-85 hover:bg-opacity-90 shadow-lg backdrop-blur-sm cursor-pointer transition-all duration-150 ${todo.isDone ? " text-neutral-500" : "text-neutral-700"}`}
     onClick={handleToggleDone}
   >
     <div className="flex items-center gap-1.5 flex-1 flex-shrink-0">
       <button 
-        className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" 
+        className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 hover:bg-neutral-100" 
         onClick={(e) => handleOpenModal(e)}
       >
         {isDragging ?(
@@ -69,19 +69,20 @@ const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
       </div>
     </div>
     {isDragging ? (
-      <div className="w-2.5 h-2.5 rounded-full" style={{
-        backgroundColor: board?.color || "#FFFFFF",
-      }}></div>
+      <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor: board?.color}}></div>
     ) : (
       <button 
+        title="완료"
+        aria-label="완료"
         className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
-        style={{
-          backgroundColor: getRGBAFromHex(data?.board.find((board) => board.id === todo.boardId)?.color || "#FFFFFF"),
-        }}
+        style={{backgroundColor: getRGBAFromHex(board?.color || "#FFFFFF")}}
         onClick={handleToggleDone}
       >
-        {/* Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools */}
-        {todo.isDone && <img src="https://www.svgrepo.com/show/509324/check.svg" alt="more" className="w-5 h-5" />}
+        <img 
+          src="https://www.svgrepo.com/show/509324/check.svg" 
+          alt="check" 
+          className={`w-5 h-5 transition-opacity duration-150 ${todo.isDone ? "opacity-100" : "opacity-0"}`} 
+        />
       </button>
     )}
   </div>;

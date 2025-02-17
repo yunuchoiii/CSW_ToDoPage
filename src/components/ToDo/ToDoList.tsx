@@ -1,3 +1,4 @@
+import { activeBoardIdState } from "@/store/data";
 import { filterState } from "@/store/filter";
 import { Todo } from "@/types/data";
 import { useRecoilValue } from "recoil";
@@ -9,8 +10,13 @@ type ToDoListProps = {
 
 const ToDoList = ({ todos }: ToDoListProps) => {
   const filter = useRecoilValue(filterState);
+  const activeBoardId = useRecoilValue(activeBoardIdState);
 
-  const filteredTodos = todos.filter((todo) => {
+  // 활성화된 보드의 항목
+  const activeTodos = activeBoardId === 0 ? todos : todos.filter((todo) => todo.boardId === activeBoardId)
+
+  // 필터링된 항목 (전체 / 완료 / 미완료)
+  const filteredTodos = activeTodos.filter((todo) => {
     if (filter === "all") return true;
     if (filter === "done") return todo.isDone;
     if (filter === "notDone") return !todo.isDone;
