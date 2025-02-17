@@ -1,6 +1,7 @@
 # GKN TODO LIST APP
 
-이 프로젝트는 글로벌널리지네트워크 사전과제로 개발된 TODO 리스트 애플리케이션입니다. Next.js와 Recoil을 사용하여 상태 관리를 구현하였으며, Tailwind CSS로 스타일링되었습니다.
+이 프로젝트는 글로벌널리지네트워크 사전과제로 개발된 TODO 리스트 애플리케이션입니다. 
+Next.js와 Recoil을 사용하여 상태 관리를 구현하였으며, Tailwind CSS로 스타일링되었습니다.
 
 ## 목차
 
@@ -84,9 +85,10 @@ bun dev
 
 ## 사용된 기술
 
-- **Next.js**: React 기반의 프레임워크로 서버 사이드 렌더링을 지원합니다.
-- **Recoil**: React 상태 관리 라이브러리로, 전역 상태 관리를 쉽게 구현할 수 있습니다.
-- **Tailwind CSS**: 유틸리티 퍼스트 CSS 프레임워크로, 빠르고 쉽게 스타일링할 수 있습니다.
+- **Next.js & React**
+- **Recoil**
+- **Tailwind CSS**
+- **DND Kit**
 
 ## 문의
 
