@@ -15,7 +15,7 @@ type SectionProps = {
 };
 
 const Section = ({ type, children }: SectionProps) => {
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const data = useRecoilValue(dataState);
   const boards = data?.board;
@@ -31,7 +31,8 @@ const Section = ({ type, children }: SectionProps) => {
   };
 
   const handleUpdateSort = () => {
-    setUseDND(!useDND);
+    // setUseDND(!useDND);
+    openModal(<DNDForm type={type} complete={closeModal}/>);
   };
 
   const handleFilter = () => {

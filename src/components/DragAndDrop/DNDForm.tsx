@@ -37,30 +37,33 @@ const DNDForm = ({ type, complete }: DNDFormProps) => {
   };
 
   return (
-    <div>
-      <DNDList
-        type={type}
-        items={type === "board" ? initData!.board.map((board) => ({
-          id: board.id,
-          sort: board.sort,
-          title: board.title,
-        })) : (
-          activeBoard ? 
-            initData!.todo.filter((todo) => todo.boardId === activeBoard).map((todo) => ({
-              id: todo.id,
-              sort: todo.sort,
-              title: todo.title,
-            })) : 
-            initData!.todo.map((todo) => ({
-              id: todo.id,
-              sort: todo.sort,
-              title: todo.title,
-            }))
-        )}
-        setItems={setItems}
-      />
+    <div className="flex flex-col gap-5">
+      <h1 className="text-xl font-bold">순서 변경</h1>
+      <div className="max-h-[calc(100vh-200px)] w-[calc(100%+24px)] -ml-3 px-3 overflow-y-auto">
+        <DNDList
+          type={type}
+          items={type === "board" ? initData!.board.map((board) => ({
+            id: board.id,
+            sort: board.sort,
+            title: board.title,
+          })) : (
+            activeBoard ? 
+              initData!.todo.filter((todo) => todo.boardId === activeBoard).map((todo) => ({
+                id: todo.id,
+                sort: todo.sort,
+                title: todo.title,
+              })) : 
+              initData!.todo.map((todo) => ({
+                id: todo.id,
+                sort: todo.sort,
+                title: todo.title,
+              }))
+          )}
+          setItems={setItems}
+        />
+      </div>
       <button 
-        className="w-full p-2 rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] active:shadow-none transition-all duration-100 mt-5 font-bold"
+        className="w-full p-2 rounded-full bg-[#d3eef4] text-cyan-700 hover:brightness-95 font-bold"
         onClick={complete}
       >
         완료

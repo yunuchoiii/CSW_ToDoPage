@@ -37,54 +37,52 @@ const ToDoItem = ({ todo, isDragging }: ToDoItemProps) => {
   }
 
   return <div 
-    className={`h-[75px] flex items-center justify-between pl-2.5 pr-5 rounded-[15px] bg-white bg-opacity-85 hover:bg-opacity-90 shadow-lg backdrop-blur-sm cursor-pointer transition-all duration-150 ${todo.isDone ? " text-neutral-500" : "text-neutral-700"}`}
+    className={`h-[75px] flex items-center justify-between pr-5 rounded-[15px] bg-opacity-85 hover:bg-opacity-90 backdrop-blur-sm cursor-pointer transition-all duration-150 
+      ${todo.isDone ? " text-neutral-500" : "text-neutral-700"} 
+      ${isDragging ? "pl-5 shadow-none bg-neutral-100 gap-2.5" : "pl-2.5 shadow-lg bg-white gap-1.5"}`}
     onClick={handleToggleDone}
   >
-    <div className="flex items-center gap-1.5 flex-1 flex-shrink-0">
+    {!isDragging && (
       <button 
         className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 hover:bg-neutral-100" 
         onClick={(e) => handleOpenModal(e)}
       >
-        {isDragging ?(
-          <img 
-            src="/images/sort-svgrepo-com.svg" 
-            alt="update-sort" 
-            className="w-6 h-6"
-          /> 
-        ): (
-          <img 
-            src="https://www.svgrepo.com/show/509384/more-vertical.svg" 
-            alt="more" 
-            className="w-4 h-4" 
-          />
-        )}
-      </button>
-      <div className="min-w-0 flex flex-col gap-1">
-        <h1 className={`text-base font-bold ellipsis ${todo.isDone ? "line-through" : ""}`}>
-          {todo.title}
-        </h1>
-        <p className="text-xs text-neutral-500 ellipsis">
-          {board?.title} | {todo.description}
-        </p>
-      </div>
-    </div>
-    {isDragging ? (
-      <div className="w-2.5 h-2.5 rounded-full" style={{backgroundColor: board?.color}}></div>
-    ) : (
-      <button 
-        title="완료"
-        aria-label="완료"
-        className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
-        style={{backgroundColor: getRGBAFromHex(board?.color || "#FFFFFF")}}
-        onClick={handleToggleDone}
-      >
         <img 
-          src="https://www.svgrepo.com/show/509324/check.svg" 
-          alt="check" 
-          className={`w-5 h-5 transition-opacity duration-150 ${todo.isDone ? "opacity-100" : "opacity-0"}`} 
+          src="https://www.svgrepo.com/show/509384/more-vertical.svg" 
+          alt="more" 
+          className="w-4 h-4" 
         />
       </button>
     )}
+    <div className="min-w-0 flex-1 flex flex-col gap-1">
+      <h1 className={`text-base font-bold ellipsis ${todo.isDone ? "line-through" : ""}`}>
+        {todo.title}
+      </h1>
+      <p className="text-xs text-neutral-500 ellipsis">
+        {board?.title} | {todo.description}
+      </p>
+    </div>
+    <button 
+      title="완료"
+      aria-label="완료"
+      className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+      style={{backgroundColor: getRGBAFromHex(board?.color || "#FFFFFF")}}
+      onClick={handleToggleDone}
+    >
+      {isDragging ? (
+      <img 
+        src="/images/sort-svgrepo-com.svg" 
+        alt="sort" 
+        className="w-5 h-5 invert" 
+      /> 
+      ):(
+      <img 
+        src="https://www.svgrepo.com/show/509324/check.svg" 
+        alt="check" 
+        className={`w-5 h-5 transition-opacity duration-150 ${todo.isDone ? "opacity-100" : "opacity-0"}`} 
+      />
+      )}
+    </button>
   </div>;
 };
 
