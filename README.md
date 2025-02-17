@@ -90,6 +90,9 @@ bun dev
 - **Tailwind CSS**
 - **DND Kit**
 
+## Copyright
+- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools
+
 ## 문의
 
 프로젝트에 대한 문의 사항이 있으면 다음 이메일로 연락하세요: [chltjdnjs529@gmail.com](mailto:chltjdnjs529@gmail.com)
